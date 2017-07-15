@@ -10,10 +10,8 @@ if [ "$(id -u)" != "0" ]; then
 	exit 1
 fi
 
-echo "Testing"
+echo "Initializing tests"
 
-# Initialize Button
-raspi-gpio set 26 ip pu
 # Initialize LEDs: Red Yellow Green => Low
 raspi-gpio set 17 op
 raspi-gpio set 27 op
@@ -22,13 +20,25 @@ raspi-gpio set 17 dh
 raspi-gpio set 27 dh
 raspi-gpio set 22 dh
 
-echo "${i2cAddDevCmd}" > ${i2cDir}/new_device
+# Initialize Button
+raspi-gpio set 26 ip pu
 
+# Debugging
+#echo "0x50" > ${i2cDir}/delete_device
+
+# Creating EEPROM device node
+if [ ! -d "${i2cDir}/${i2cDev}" ]; then
+	echo "Creating EEPROM device node"
+	echo "${i2cAddDevCmd}" > ${i2cDir}/new_device
+fi
+
+# Visualize "Done initializing"
 sleep 1
 raspi-gpio set 17 dl
 raspi-gpio set 27 dl
 raspi-gpio set 22 dl
 
+echo "Done initializing"
 echo "Waiting for button pressed event"
 
 while true; do
