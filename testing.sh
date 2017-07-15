@@ -20,7 +20,7 @@ while true; do
 		echo "Button pressed"
 		echo "Starting Tests"
 
-		sudo dd if=${eepFile} of=${i2cDir}/${i2cDev}/eeprom
+		#sudo dd if=${eepFile} of=${i2cDir}/${i2cDev}/eeprom
 		sudo cmp ${eepFile} ${i2cDir}/${i2cDev}/eeprom -n $(wc -c ${eepFile} | cut -d " " -f 1)
 
 		if [ "$?" -eq "0" ]; then
