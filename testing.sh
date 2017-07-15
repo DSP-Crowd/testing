@@ -30,7 +30,7 @@ while true; do
 		fi
 
 		elapsedTime=$((${SECONDS} - ${startTime}))
-		echo "Duration: ${elapsedTime} Seconds"
+		echo "Duration: $(($elapsedTime / 60)) min $(($elapsedTime % 60)) sec"
 
 		break;
 	fi
