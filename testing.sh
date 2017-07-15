@@ -58,7 +58,7 @@ while true; do
 		elapsedTime=$((${SECONDS} - ${startTime}))
 		echo "Duration: $(($elapsedTime / 60)) min $(($elapsedTime % 60)) sec"
 
-		break;
+		echo "Waiting for button pressed event"
 	fi
 
 	sleep 1
