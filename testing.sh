@@ -3,6 +3,7 @@
 i2cDir="/sys/class/i2c-adapter/i2c-0"
 i2cAddDevCmd="24c32 0x50"
 i2cDev="0-0050"
+testingDir="/home/pi/testing"
 eepFile="rr_base.eep"
 
 if [ "$(id -u)" != "0" ]; then
@@ -54,8 +55,8 @@ while true; do
 		echo "Button pressed"
 		echo "Starting tests"
 
-		#dd if=${eepFile} of=${i2cDir}/${i2cDev}/eeprom
-		cmp ${eepFile} ${i2cDir}/${i2cDev}/eeprom -n $(wc -c ${eepFile} | cut -d " " -f 1)
+		#dd if=${testingDir}/${eepFile} of=${i2cDir}/${i2cDev}/eeprom
+		cmp ${testingDir}/${eepFile} ${i2cDir}/${i2cDev}/eeprom -n $(wc -c ${testingDir}/${eepFile} | cut -d " " -f 1)
 
 		if [ "$?" -eq "0" ]; then
 			raspi-gpio set 17 dl
