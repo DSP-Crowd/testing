@@ -16,12 +16,13 @@ raspi-gpio set 22 op
 raspi-gpio set 17 dh
 raspi-gpio set 27 dh
 raspi-gpio set 22 dh
+
+sudo echo "${i2cAddDevCmd}" > ${i2cDir}/new_device
+
 sleep 1
 raspi-gpio set 17 dl
 raspi-gpio set 27 dl
 raspi-gpio set 22 dl
-
-sudo echo "${i2cAddDevCmd}" > ${i2cDir}/new_device
 
 echo "Waiting for button pressed event"
 
