@@ -5,6 +5,11 @@ i2cAddDevCmd="24c32 0x50"
 i2cDev="0-0050"
 eepFile="rr_base.eep"
 
+if [ "$(id -u)" != "0" ]; then
+	echo "This script must be run as root" 1>&2
+	exit 1
+fi
+
 echo "Testing"
 
 # Initialize Button
@@ -64,3 +69,5 @@ while true; do
 
 	sleep 1
 done
+
+exit 0
