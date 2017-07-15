@@ -31,6 +31,10 @@ while true; do
 	if [ "${buttonPressed}" -eq "0" ]; then
 		startTime=${SECONDS}
 
+		raspi-gpio set 17 dl
+		raspi-gpio set 27 dh
+		raspi-gpio set 22 dl
+
 		echo "Button pressed"
 		echo "Starting Tests"
 
@@ -38,8 +42,16 @@ while true; do
 		sudo cmp ${eepFile} ${i2cDir}/${i2cDev}/eeprom -n $(wc -c ${eepFile} | cut -d " " -f 1)
 
 		if [ "$?" -eq "0" ]; then
+			raspi-gpio set 17 dl
+			raspi-gpio set 27 dl
+			raspi-gpio set 22 dh
+
 			echo "Test OK"
 		else
+			raspi-gpio set 17 dh
+			raspi-gpio set 27 dl
+			raspi-gpio set 22 dl
+
 			echo "Test FAILED"
 		fi
 
