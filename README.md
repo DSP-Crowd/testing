@@ -10,3 +10,4 @@ PREPARATION:
   For testing use following line:
   /home/pi/testing/testing.sh &> /home/pi/testing/log.txt &
 - Reboot
+- Check log with tail -f log.txt
