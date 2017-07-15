@@ -12,6 +12,8 @@ raspi-gpio set 26 ip pu
 
 sudo echo "${i2cAddDevCmd}" > ${i2cDir}/new_device
 
+echo "Waiting for button pressed event"
+
 while true; do
 	buttonPressed=$(raspi-gpio get 26 | cut -d '=' -f 2 | cut -d ' ' -f 1)
 
