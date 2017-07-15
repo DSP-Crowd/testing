@@ -17,7 +17,7 @@ raspi-gpio set 17 dh
 raspi-gpio set 27 dh
 raspi-gpio set 22 dh
 
-sudo echo "${i2cAddDevCmd}" > ${i2cDir}/new_device
+echo "${i2cAddDevCmd}" > ${i2cDir}/new_device
 
 sleep 1
 raspi-gpio set 17 dl
@@ -39,8 +39,8 @@ while true; do
 		echo "Button pressed"
 		echo "Starting Tests"
 
-		#sudo dd if=${eepFile} of=${i2cDir}/${i2cDev}/eeprom
-		sudo cmp ${eepFile} ${i2cDir}/${i2cDev}/eeprom -n $(wc -c ${eepFile} | cut -d " " -f 1)
+		#dd if=${eepFile} of=${i2cDir}/${i2cDev}/eeprom
+		cmp ${eepFile} ${i2cDir}/${i2cDev}/eeprom -n $(wc -c ${eepFile} | cut -d " " -f 1)
 
 		if [ "$?" -eq "0" ]; then
 			raspi-gpio set 17 dl
