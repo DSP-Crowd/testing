@@ -5,7 +5,7 @@ i2cAddDevCmd="24c32 0x50"
 i2cDev="0-0050"
 eepFile="rr_base.eep"
 
-echo Testing
+echo "Testing"
 
 raspi-gpio set 26 ip pu
 
