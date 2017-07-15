@@ -52,7 +52,7 @@ while true; do
 		raspi-gpio set 22 dl
 
 		echo "Button pressed"
-		echo "Starting Tests"
+		echo "Starting tests"
 
 		#dd if=${eepFile} of=${i2cDir}/${i2cDev}/eeprom
 		cmp ${eepFile} ${i2cDir}/${i2cDev}/eeprom -n $(wc -c ${eepFile} | cut -d " " -f 1)
@@ -62,13 +62,13 @@ while true; do
 			raspi-gpio set 27 dl
 			raspi-gpio set 22 dh
 
-			echo "Test OK"
+			echo "Tests OK"
 		else
 			raspi-gpio set 17 dh
 			raspi-gpio set 27 dl
 			raspi-gpio set 22 dl
 
-			echo "Test FAILED"
+			echo "Tests FAILED"
 		fi
 
 		elapsedTime=$((${SECONDS} - ${startTime}))
