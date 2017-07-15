@@ -7,6 +7,7 @@ eepFile="rr_base.eep"
 
 echo "Testing"
 
+# Initialize Button
 raspi-gpio set 26 ip pu
 
 sudo echo "${i2cAddDevCmd}" > ${i2cDir}/new_device
