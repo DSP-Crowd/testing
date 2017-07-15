@@ -7,7 +7,7 @@ PREPARATION:
   dtoverlay=dspc-base
 - Add following line to /etc/rc.local:
   /home/pi/testing/testing.sh &
-  For testing use following line:
+  For testing use following line (bug: not working?):
   /home/pi/testing/testing.sh &> /home/pi/testing/log.txt &
 - Reboot
 - Check log with tail -f log.txt
