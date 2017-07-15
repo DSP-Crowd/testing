@@ -9,6 +9,17 @@ echo "Testing"
 
 # Initialize Button
 raspi-gpio set 26 ip pu
+# Initialize LEDs: Red Yellow Green => Low
+raspi-gpio set 17 op
+raspi-gpio set 27 op
+raspi-gpio set 22 op
+raspi-gpio set 17 dh
+raspi-gpio set 27 dh
+raspi-gpio set 22 dh
+sleep 1
+raspi-gpio set 17 dl
+raspi-gpio set 27 dl
+raspi-gpio set 22 dl
 
 sudo echo "${i2cAddDevCmd}" > ${i2cDir}/new_device
 
