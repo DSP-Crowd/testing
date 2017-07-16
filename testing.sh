@@ -7,7 +7,7 @@ function showOk {
 	echo "Tests OK"
 }
 
-function showFail {
+function showFailed {
 	raspi-gpio set 17 dh
 	raspi-gpio set 27 dl
 	raspi-gpio set 22 dl
