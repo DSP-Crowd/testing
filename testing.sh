@@ -1,5 +1,19 @@
 #!/bin/bash
 
+function showOk {
+	raspi-gpio set 17 dl
+	raspi-gpio set 27 dl
+	raspi-gpio set 22 dh
+	echo "Tests OK"
+}
+
+function showFail {
+	raspi-gpio set 17 dh
+	raspi-gpio set 27 dl
+	raspi-gpio set 22 dl
+	echo "Tests FAILED"
+}
+
 i2cDir="/sys/class/i2c-adapter/i2c-0"
 i2cAddDevCmd="24c32 0x50"
 i2cDev="0-0050"
@@ -55,21 +69,22 @@ while true; do
 		echo "Button pressed"
 		echo "Starting tests"
 
-		#dd if=${testingDir}/${eepFile} of=${i2cDir}/${i2cDev}/eeprom
+		echo "Comparing EEPROM data to factory file"
 		cmp ${testingDir}/${eepFile} ${i2cDir}/${i2cDev}/eeprom -n $(wc -c ${testingDir}/${eepFile} | cut -d " " -f 1)
-
 		if [ "$?" -eq "0" ]; then
-			raspi-gpio set 17 dl
-			raspi-gpio set 27 dl
-			raspi-gpio set 22 dh
-
-			echo "Tests OK"
+			showOk
 		else
-			raspi-gpio set 17 dh
-			raspi-gpio set 27 dl
-			raspi-gpio set 22 dl
+			echo "Data on EEPROM differs from factory file"
+			echo "Writing factory file to EEPROM"
+			dd if=${testingDir}/${eepFile} of=${i2cDir}/${i2cDev}/eeprom
 
-			echo "Tests FAILED"
+			echo "Comparing again"
+			cmp ${testingDir}/${eepFile} ${i2cDir}/${i2cDev}/eeprom -n $(wc -c ${testingDir}/${eepFile} | cut -d " " -f 1)
+			if [ "$?" -eq "0" ]; then
+				showOk
+			else
+				showFailed
+			fi
 		fi
 
 		elapsedTime=$((${SECONDS} - ${startTime}))
