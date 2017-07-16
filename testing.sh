@@ -19,6 +19,7 @@ i2cAddDevCmd="24c32 0x50"
 i2cDev="0-0050"
 testingDir="/home/pi/testing"
 eepFile="rr_base.eep"
+encDrvMsg="enc28j60 driver registered"
 
 if [ "$(id -u)" != "0" ]; then
 	echo "This script must be run as root" 1>&2
@@ -58,7 +59,6 @@ echo "Waiting for button pressed event"
 
 while true; do
 	buttonPressed=$(raspi-gpio get 26 | cut -d '=' -f 2 | cut -d ' ' -f 1)
-
 	if [ "${buttonPressed}" -eq "0" ]; then
 		startTime=${SECONDS}
 
@@ -66,25 +66,55 @@ while true; do
 		raspi-gpio set 27 dh
 		raspi-gpio set 22 dl
 
+		result=0
+
 		echo "Button pressed"
 		echo "Starting tests"
 
+		sleep 1
+
+		buttonPressed=$(raspi-gpio get 26 | cut -d '=' -f 2 | cut -d ' ' -f 1)
+		if [ "${buttonPressed}" -eq "0" ]; then
+			raspi-gpio set 17 dh
+			numExpEthDrvOk=1
+		else
+			numExpEthDrvOk=2
+		fi
+
+		echo "Checking ethernet driver messages"
+		echo "Expected number of interfaces: ${numExpEthDrvOk}"
+		yes "dummy" | head -n 20 >> /dev/kmsg
+		rmmod enc28j60 &> /dev/null
+		modprobe enc28j60
+		numEthDrvOk=$(dmesg | tail -n 10 | grep "${encDrvMsg}" | wc -l)
+		if [ "${numEthDrvOk}" -ne "${numExpEthDrvOk}" ]; then
+			result=1
+			echo "######"
+			echo "Error: Number of working interfaces: ${numEthDrvOk}"
+			echo "######"
+		fi
+
 		echo "Comparing EEPROM data to factory file"
 		cmp ${testingDir}/${eepFile} ${i2cDir}/${i2cDev}/eeprom -n $(wc -c ${testingDir}/${eepFile} | cut -d " " -f 1)
-		if [ "$?" -eq "0" ]; then
-			showOk
-		else
+		if [ "$?" -ne "0" ]; then
 			echo "Data on EEPROM differs from factory file"
 			echo "Writing factory file to EEPROM"
 			dd if=${testingDir}/${eepFile} of=${i2cDir}/${i2cDev}/eeprom
 
 			echo "Comparing again"
 			cmp ${testingDir}/${eepFile} ${i2cDir}/${i2cDev}/eeprom -n $(wc -c ${testingDir}/${eepFile} | cut -d " " -f 1)
-			if [ "$?" -eq "0" ]; then
-				showOk
-			else
-				showFailed
+			if [ "$?" -ne "0" ]; then
+				result=1
+				echo "######"
+				echo "Error: Data on EEPROM still differs from factory file"
+				echo "######"
 			fi
+		fi
+
+		if [ "${result}" -eq "0" ]; then
+			showOk
+		else
+			showFailed
 		fi
 
 		elapsedTime=$((${SECONDS} - ${startTime}))
