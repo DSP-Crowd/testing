@@ -4,14 +4,18 @@ function showOk {
 	raspi-gpio set 17 dl
 	raspi-gpio set 27 dl
 	raspi-gpio set 22 dh
-	echo "Tests OK"
+	echo "######"
+	echo "All tests OK"
+	echo "######"
 }
 
 function showFailed {
 	raspi-gpio set 17 dh
 	raspi-gpio set 27 dl
 	raspi-gpio set 22 dl
+	echo "######"
 	echo "Tests FAILED"
+	echo "######"
 }
 
 i2cDir="/sys/class/i2c-adapter/i2c-0"
@@ -68,6 +72,7 @@ while true; do
 
 		result=0
 
+		echo "##################"
 		echo "Button pressed"
 		echo "Starting tests"
 
