@@ -87,7 +87,9 @@ while true; do
 		rmmod enc28j60 &> /dev/null
 		modprobe enc28j60
 		numEthDrvOk=$(dmesg | tail -n 10 | grep "${encDrvMsg}" | wc -l)
-		if [ "${numEthDrvOk}" -ne "${numExpEthDrvOk}" ]; then
+		if [ "${numEthDrvOk}" -eq "${numExpEthDrvOk}" ]; then
+			echo "Ethernet test OK"
+		else
 			result=1
 			echo "######"
 			echo "Error: Number of working interfaces: ${numEthDrvOk}"
@@ -103,7 +105,9 @@ while true; do
 
 			echo "Comparing again"
 			cmp ${testingDir}/${eepFile} ${i2cDir}/${i2cDev}/eeprom -n $(wc -c ${testingDir}/${eepFile} | cut -d " " -f 1)
-			if [ "$?" -ne "0" ]; then
+			if [ "$?" -eq "0" ]; then
+				echo "EEPROM test OK"
+			else
 				result=1
 				echo "######"
 				echo "Error: Data on EEPROM still differs from factory file"
