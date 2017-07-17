@@ -20,7 +20,10 @@ TODO:
   - Pressing button on startup => update
   - Visualize: Red + Green => update in progress
   - Visualize: Update finished
-  - Auto-Reboot => Visualize
-- Show internet connection
-  - Visualize: Yellow + Green
+  - Auto-Reboot => Visualize (No LEDs?)
+- Show Internet connection
+  - Visu:
+    - Yellow + Green on Startup => Internet connection ok
+    - Red + Yellow + Green => No Internet
   - Use ping to verify
+- Update Visu after Internet state
