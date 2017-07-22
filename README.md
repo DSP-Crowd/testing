@@ -9,6 +9,7 @@ PREPARATION:
   /home/pi/testing/testing.sh &
   For testing use following line (bug: not working?):
   /home/pi/testing/testing.sh &> /home/pi/testing/log.txt &
+- $ sudo apt-get install raspi-gpio
 - Reboot
 - Check log with tail -f log.txt
 
