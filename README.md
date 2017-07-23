@@ -28,3 +28,5 @@ TODO:
     - Red + Yellow + Green => No Internet
   - Use ping to verify
 - Update Visu after Internet state
+- Use command: dtoverlay
+- Green after boot
