@@ -40,6 +40,8 @@ raspi-gpio set 22 op
 ping -c 1 -W 1 www.google.at &> /dev/null
 if [ "$?" -ne "0" ]; then
 	raspi-gpio set 17 dh
+else
+	raspi-gpio set 17 dl
 fi
 raspi-gpio set 27 dh
 raspi-gpio set 22 dh
