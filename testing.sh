@@ -105,8 +105,8 @@ while true; do
 #		false
 		if [ "$?" -ne "0" ]; then
 			echo "Data on EEPROM differs from factory file"
-			echo "Writing factory file to EEPROM"
-			if [ -n "$1" ]; then
+			if [ -z "$1" ]; then
+				echo "Writing factory file to EEPROM"
 				dd if=${testingDir}/${eepFile} of=${i2cDir}/${i2cDev}/eeprom
 			fi
 
