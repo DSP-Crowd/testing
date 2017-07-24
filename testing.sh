@@ -69,9 +69,10 @@ if [ "${buttonPressed}" -eq "0" ]; then
 	raspi-gpio set 22 dh
 
 	git -C ${testingDir} pull origin_read master
+	chown pi:pi ${testingDir}
 
+	sleep 1
 	reboot
-
 	exit 0
 else
 	echo "Done initializing"
