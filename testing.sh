@@ -60,10 +60,26 @@ fi
 
 # Visualize "Done initializing"
 sleep 2
-raspi-gpio set 17 dl
-raspi-gpio set 27 dl
+buttonPressed=$(raspi-gpio get 26 | cut -d '=' -f 2 | cut -d ' ' -f 1)
+if [ "${buttonPressed}" -eq "0" ]; then
+	echo "Updating"
 
-echo "Done initializing"
+	raspi-gpio set 17 dh
+	raspi-gpio set 27 dl
+	raspi-gpio set 22 dh
+
+	git -C ${testingDir} pull origin_read master
+
+	#reboot
+
+	exit 0
+else
+	echo "Done initializing"
+
+	raspi-gpio set 17 dl
+	raspi-gpio set 27 dl
+fi
+
 echo "Waiting for button pressed event"
 
 while true; do
