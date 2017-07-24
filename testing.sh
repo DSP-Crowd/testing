@@ -103,6 +103,7 @@ while true; do
 
 		echo "Comparing EEPROM data to factory file"
 		cmp ${testingDir}/${eepFile} ${i2cDir}/${i2cDev}/eeprom -n $(wc -c ${testingDir}/${eepFile} | cut -d " " -f 1)
+#		false
 		if [ "$?" -ne "0" ]; then
 			echo "Data on EEPROM differs from factory file"
 			echo "Writing factory file to EEPROM"
