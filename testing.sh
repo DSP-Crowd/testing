@@ -25,7 +25,7 @@ testingDir="/home/pi/testing"
 eepFile="rr_base.eep"
 encDrvMsg="enc28j60 driver registered"
 
-if [ "$(id -u)" != "0" ]; then
+if [ "$(id -u)" -ne "0" ]; then
 	echo "This script must be run as root" 1>&2
 	exit 1
 fi
