@@ -53,7 +53,7 @@ if [ ! -d "${i2cDir}/${i2cDev}" ]; then
 fi
 
 # Visualize "Done initializing"
-sleep 1
+sleep 2
 raspi-gpio set 17 dl
 raspi-gpio set 27 dl
 raspi-gpio set 22 dl
