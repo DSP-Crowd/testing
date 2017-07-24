@@ -56,7 +56,6 @@ fi
 sleep 2
 raspi-gpio set 17 dl
 raspi-gpio set 27 dl
-raspi-gpio set 22 dl
 
 echo "Done initializing"
 echo "Waiting for button pressed event"
