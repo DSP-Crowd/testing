@@ -70,7 +70,7 @@ if [ "${buttonPressed}" -eq "0" ]; then
 
 	git -C ${testingDir} pull origin_read master
 
-	#reboot
+	reboot
 
 	exit 0
 else
