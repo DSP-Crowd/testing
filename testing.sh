@@ -36,7 +36,11 @@ echo "Initializing tests"
 raspi-gpio set 17 op
 raspi-gpio set 27 op
 raspi-gpio set 22 op
-raspi-gpio set 17 dh
+
+ping -c 1 -W 1 www.google.at &> /dev/null
+if [ "$?" -ne "0" ]; then
+	raspi-gpio set 17 dh
+fi
 raspi-gpio set 27 dh
 raspi-gpio set 22 dh
 
