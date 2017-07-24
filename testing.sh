@@ -121,6 +121,8 @@ while true; do
 				echo "Error: Data on EEPROM still differs from factory file"
 				echo "######"
 			fi
+		else
+			echo "EEPROM test OK"
 		fi
 
 		if [ "${result}" -eq "0" ]; then
